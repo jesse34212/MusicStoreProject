@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Fresh Corn Records</title>
+    <title>Fresh Corn Records Test</title>
     <link rel="shortcut icon" href="<c:url value='/images/favicon.ico'/>">
     <link rel="stylesheet" href="<c:url value='/styles/main.css'/> ">
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
