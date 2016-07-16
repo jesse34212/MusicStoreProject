@@ -1,2 +1,6 @@
+/build/
+/nbproject/private/
+/dist/
+
 context.xml
 persistence.xml
