@@ -15,6 +15,9 @@
 <form action="reports.jsp" method="post">
     <input type="submit" value="Display Reports" class="left_margin">
 </form>
+<form action="<c:url value='/adminController/displayInvoices2'/>" method="post">
+   <input type="submit" value="Process Invoices" class="left_margin">
+</form>
 
 </section>
 

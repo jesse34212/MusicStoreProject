@@ -30,6 +30,8 @@ public class AdminController extends HttpServlet {
             url = processInvoice(request, response);
         } else if (requestURI.endsWith("/displayReport")) {
             displayReport(request, response);
+        } else if (requestURI.endsWith("/displayInvoices2")) {
+            url = displayInvoices(request, response);
         }
 
         getServletContext()
@@ -74,6 +76,24 @@ public class AdminController extends HttpServlet {
         return url;
     }
     
+    private String displayInvoices2(HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+
+        List<Invoice> unprocessedInvoices
+                = InvoiceDB.selectUnprocessedInvoices();
+        
+        String url;
+        if (unprocessedInvoices != null) {
+            if (unprocessedInvoices.size() <= 0) {
+                unprocessedInvoices = null;
+            }
+        }
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("unprocessedInvoices", unprocessedInvoices);
+        url = "/admin/invoices.jsp";
+        return url;
+    }
     private String displayInvoice(HttpServletRequest request,
             HttpServletResponse response) {
 
@@ -97,6 +117,7 @@ public class AdminController extends HttpServlet {
         return "/admin/invoice.jsp";
     }
 
+    
     private String processInvoice(HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
