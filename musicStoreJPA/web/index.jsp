@@ -4,7 +4,7 @@
 <!-- start the middle column -->
 
 <section>
-    <h1>Welcome to Fresh Corn Records!</h1>
+    <h1>Welcome to Good Music Vinyl Records!</h1>
 
     <p>Thanks for visiting. Make yourself at home. Feel free to browse through 
     our musical catalog. When you do, you can listen to samples from the

@@ -23,7 +23,7 @@
                         <a href="<c:url value='/catalog' />">Catalog</a>
                     </li>
                 </ul>
-                <a href="index.html" id="logo"><img src="<c:url value='/images/logo.png' />" alt="Image"></a>
+                <a href="<c:url value='/' />" id="logo"><img src="<c:url value='/images/logo.png' />" alt="Image"></a>
                 <ul>
                     <li <c:if test="${fn:contains(pageContext.request.servletPath,'/admin') || pageContext.request.servletPath == '/login.jsp'}">class="current"</c:if>>
                         <a href="<c:url value='/admin'/>">Admin</a>
