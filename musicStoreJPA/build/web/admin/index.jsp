@@ -6,8 +6,7 @@
 
 <section id="admin">
 
-<h1>Admin Menu</h1>
-
+    <h1>Admin Menu<c:if test="${not empty admincontroller.username}"> - ${admincontroller.username}</c:if></h1>
 <!-- these Form tags don't force a secure connection -->
 <form action="<c:url value='/adminController/displayInvoices'/>" method="post">
    <input type="submit" value="Process Invoices" class="left_margin">
@@ -15,9 +14,10 @@
 <form action="reports.jsp" method="post">
     <input type="submit" value="Display Reports" class="left_margin">
 </form>
+   <!--
 <form action="<c:url value='/adminController/displayInvoices2'/>" method="post">
    <input type="submit" value="Process Invoices" class="left_margin">
-</form>
+</form> -->
 
 </section>
 

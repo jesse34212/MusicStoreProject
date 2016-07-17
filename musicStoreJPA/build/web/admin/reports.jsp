@@ -22,6 +22,10 @@
     <input type="hidden" name="reportTitle" value="The Downloads report">
     <input type="submit" value="Downloads report" class="left_margin">
 </form>
+<br />    
+<form action="<c:url value='/admin'/>" method="post">
+    <input type=submit value="Go Back to Menu">
+</form>
 
 </section>
 

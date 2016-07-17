@@ -16,7 +16,12 @@ import music.business.*;
 import music.data.*;
 
 public class AdminController extends HttpServlet {
-
+    private String userName;
+    
+    public AdminController() {
+        userName = "";
+    }
+    
     @Override
     public void doPost(HttpServletRequest request,
             HttpServletResponse response)
@@ -37,6 +42,8 @@ public class AdminController extends HttpServlet {
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
+        
+        setUserName(request.getRemoteUser());
     }
 
     @Override
@@ -73,6 +80,7 @@ public class AdminController extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("unprocessedInvoices", unprocessedInvoices);
         url = "/admin/invoices.jsp";
+ 
         return url;
     }
     
@@ -149,5 +157,12 @@ public class AdminController extends HttpServlet {
         try (OutputStream out = response.getOutputStream()) {
             workbook.write(out);
         }
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getFirstName() {
+        return userName;
     }
 }
