@@ -5,3 +5,5 @@
 context.xml
 persistence.xml
 /musicStoreJPA/dist/
+/musicStoreJPA/nbproject/private/
+/musicStoreJPA/build/

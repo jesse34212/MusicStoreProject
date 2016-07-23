@@ -24,12 +24,15 @@
             <td><label>Price:</label></td>
             <td><input type="text" name="productPrice" maxlength="6" size="6" value="<c:out value='${productPrice}'/>"></td>
         </tr>
+        </table>
+        <table>
         <tr>
-            <td></td>
             <td>
                 <input type="hidden" name="action" value="updateProduct">
                 <input type="submit" value="Update Product" style="margin-left: 6em;">
                 </form>
+            </td>
+            <td>
                 <form action="productMaint">
     <input type="hidden" name="action" value="displayProducts">
     <input type="submit" value="View Products"> 
