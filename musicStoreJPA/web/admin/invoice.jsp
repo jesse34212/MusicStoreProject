@@ -8,7 +8,7 @@
 
 <h1>Your invoice</h1>
 
-<table>
+<table class="none">
   <tr>
     <td><b>Date</b></td>
     <td>${invoice.invoiceDate}</td>

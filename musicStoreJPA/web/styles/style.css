@@ -275,23 +275,7 @@ p a:hover {
 	text-shadow: 0 1px #381120;
 	text-transform: uppercase;
 }
-#body div table tr {
-	display: block;
-	padding: 0 0 15px;
-}
-#body div table tr td:first-child {
-	padding: 0;
-	width: 170px;
-}
-#body div table tr td {
-	line-height: 30px;
-	padding: 0;
-	text-shadow: 0 1px #381120;
-}
-#body div table tr td a {
-	color: #BCBEC0;
-	text-decoration: none;
-}
+
 #body div div {
 	overflow: hidden;
 	padding: 0;

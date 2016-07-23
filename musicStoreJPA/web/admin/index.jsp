@@ -15,12 +15,13 @@
 <form action="reports.jsp" method="post">
     <input type="submit" value="Display Reports" class="left_margin">
 </form>
-<form action="<c:url value='/adminController/displayInvoices2'/>" method="post">
-   <input type="submit" value="Process Invoices" class="left_margin">
+<form action="<c:url value='/adminController/productMaint?action=displayProducts'/>" method="post">
+   <input type="submit" value="Maintain Products" class="left_margin">
 </form>
 
 </section>
 
+   
 <!-- end middle column -->
 
 <jsp:include page="/includes/footer.jsp" />
