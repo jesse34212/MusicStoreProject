@@ -26,7 +26,7 @@
                 <a href="<c:url value='/' />" id="logo"><img src="<c:url value='/images/logo.png' />" alt="Image"></a>
                 <ul>
                     <li <c:if test="${fn:contains(pageContext.request.servletPath,'/admin') || pageContext.request.servletPath == '/login.jsp'}">class="current"</c:if>>
-                        <a href="<c:url value='/admin'/>">Admin</a>
+                        <a href="<c:url value='/admin'/>">Admin<c:if test="${not empty AdminController.userName}"> - ${AdminController.userName}</c:if></a>
                     </li>
                     <li <c:if test="${fn:contains(pageContext.request.servletPath,'/cart')}">class="current"</c:if>>
                         <a href="<c:url value='/order/showCart'/>">Cart</a>
@@ -43,7 +43,7 @@
                     <a href="<c:url value='/customer_service' />">Customer Service</a>
                 </li>
                 <li>
-                    <a href="newrelease.html"><span>Logout</span></a>
+                    <a href="<c:url value='/user/deleteCookies' />"><span>Logout</span></a>
                 </li>
             </ul>
         </div>
