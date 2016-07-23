@@ -10,11 +10,11 @@
 <div>
 <table class="none">
     <tr>
-        <th>Code</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <td>Code</td>
+        <td>Description</td>
+        <td>Price</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
     </tr>
     <c:forEach var="product" items="${requestScope.products}">
     <tr>

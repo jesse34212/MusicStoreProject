@@ -1,6 +1,8 @@
 package music.controllers;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
@@ -18,10 +20,13 @@ public class UserController extends HttpServlet {
         String url = "";
         if (requestURI.endsWith("/deleteCookies")) {
             url = deleteCookies(request, response);
-        }
-        getServletContext()
+            getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
+        } else if (requestURI.endsWith("/logout")) {
+            logout(request, response);
+        }
+        
     }
 
     @Override
@@ -79,5 +84,19 @@ public class UserController extends HttpServlet {
             url = "/email/thanks.jsp";
         }
         return url;
+    }
+    
+    private void logout(HttpServletRequest request,
+            HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        
+        String relativeURL = request.getContextPath();
+
+        try {
+            response.sendRedirect(relativeURL + "/login.jsp");
+        } catch (IOException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

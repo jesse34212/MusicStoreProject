@@ -42,9 +42,11 @@
                 <li>
                     <a href="<c:url value='/customer_service' />">Customer Service</a>
                 </li>
+                <c:if test="${not empty pageContext.request.userPrincipal}">
                 <li>
-                    <a href="<c:url value='/user/deleteCookies' />"><span>Logout</span></a>
+                    <a href="<c:url value='/user/logout' />"><span>Logout</span></a>
                 </li>
+                </c:if>
             </ul>
         </div>
     </div>
