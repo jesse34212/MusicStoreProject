@@ -32,8 +32,9 @@ public class AdminController extends HttpServlet {
             displayReport(request, response);
         } else if (requestURI.endsWith("/displayInvoices2")) {
             url = displayInvoices(request, response);
+        } else if (requestURI.endsWith("/productMaint")) {
+            url = displayProducts(request, response);
         }
-
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
@@ -50,6 +51,8 @@ public class AdminController extends HttpServlet {
             url = displayInvoice(request, response);
         } else if (requestURI.endsWith("/displayInvoices")) {
             url = displayInvoices(request, response);
+        } else if (requestURI.endsWith("/productMaint")) {
+            url = displayProducts(request, response);
         }
 
         getServletContext()
@@ -149,5 +152,135 @@ public class AdminController extends HttpServlet {
         try (OutputStream out = response.getOutputStream()) {
             workbook.write(out);
         }
+    }
+    
+    private String displayProducts(HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
+
+        // Initiate returl URL, default to home page if logic error
+        String url = "/admin/index.jsp";
+        
+        // Populate data, from earlier project
+        //String path = this.getServletContext().getRealPath("/WEB-INF/products.txt");
+        //ProductIO.init(path);
+        
+        // get current action
+        String action = request.getParameter("action");
+        
+        // Set default action
+        if (action == null) {
+            action = "displayProducts";   
+        }
+        
+        // Handles displayProducts action
+        if (action.equalsIgnoreCase("displayProducts")) {            
+            List<Product> products = ProductDB.selectProducts();
+            request.setAttribute("products", products);
+            url = "/admin/products.jsp";
+        }
+        
+        // Handles addProduct action
+        // When adding a product, we must provide an empty form
+        else if (action.equalsIgnoreCase("addProduct")) {
+            String productCode ="";
+            url = "/admin/product.jsp";
+        }
+       
+        // Handles editProduct action
+        else if (action.equalsIgnoreCase("editProduct")) {
+            // Get productCode from request
+            String productCode = request.getParameter("productCode");
+            
+            // Filling in product object with data
+            Product p = new Product();
+            p = ProductDB.selectProduct(productCode);
+            
+            // Set data on page
+            request.setAttribute("productCode", productCode);
+            request.setAttribute("productDescription", p.getDescription());
+            request.setAttribute("productPrice", p.getPrice());
+            
+            // Set page we need to go to
+            url = "/admin/product.jsp";
+        }
+        
+        
+        // Handles deleteProduct action
+        else if (action.equalsIgnoreCase("deleteProduct")) {
+            // Get productCode from request
+            String productCode = request.getParameter("productCode");
+            
+            // Filling in product object with data
+            Product p = new Product();
+            p = ProductDB.selectProduct(productCode);
+            
+            // Set data on page
+            request.setAttribute("productCode", productCode);
+            request.setAttribute("productDescription", p.getDescription());
+            request.setAttribute("productPrice", p.getPrice());
+            
+            // Set page we need to go to
+            url="/admin/deleteProduct.jsp";
+        }
+        
+        // Handle updateProduct action
+        else if (action.equalsIgnoreCase("updateProduct")) {
+            String message ="";
+            String numberMessage="";
+            String productCode = request.getParameter("productCode");
+            String productDescription = request.getParameter("productDescription");
+            String price = request.getParameter("productPrice");
+            double priceAsDouble=0L;
+            try {
+              priceAsDouble = Double.parseDouble(price);
+            } catch(NumberFormatException e) {
+                numberMessage = "Please Enter a valid price value";
+                url="/admin/product.jsp";
+                request.setAttribute("numberMessage", numberMessage);
+            }
+            
+            
+            if (productCode == null || productDescription == null ||
+                price == null || productCode.isEmpty() ||
+                productDescription.isEmpty() || price.isEmpty()) {
+                message = "Please fill out all three text boxes";
+                url = "/admin/product.jsp";
+            }
+            if(numberMessage.isEmpty()) {
+                Product p = new Product();
+                if(ProductIO.exists(productCode)) {
+                    p = ProductDB.selectProduct(productCode);
+                    p.setDescription(productDescription);
+                    p.setPrice(priceAsDouble);
+                    ProductIO.updateProduct(p);
+                }
+                else {
+                    p.setCode(productCode);
+                    p.setDescription(productDescription);
+                    p.setPrice(priceAsDouble);
+                    ProductIO.insertProduct(p);
+                }
+                url="/admin/products.jsp";
+            }
+            List<Product> products = ProductDB.selectProducts();    
+            
+            request.setAttribute("products", products);
+            request.setAttribute("message", message);
+            request.setAttribute("productCode", productCode);
+            request.setAttribute("productDescription", productDescription);
+            request.setAttribute("productPrice", price);  
+        }
+     
+        //Handle confirmDelete Action
+        else if(action.equalsIgnoreCase("confirmDelete")) {
+            String productCode = request.getParameter("productCode");
+            Product p = ProductDB.selectProduct(productCode);
+            ProductDB.deleteProduct(p);
+            List<Product> products = ProductDB.selectProducts();
+            request.setAttribute("products", products);
+            url="/admin/products.jsp";
+        }
+        
+        return url;
     }
 }

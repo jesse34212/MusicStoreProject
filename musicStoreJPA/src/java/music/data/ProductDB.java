@@ -33,7 +33,7 @@ public class ProductDB {
         return em.find(Product.class, productId);
     }
     
-    public List<Product> selectProducts() {
+    public static List<Product> selectProducts() {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         String qString = "SELECT p from Product p";
         TypedQuery<Product> q = em.createQuery(qString, Product.class);
@@ -47,5 +47,17 @@ public class ProductDB {
         }
         
         return results;
+    }
+    
+     public static void insertProduct(Product product) {
+        
+    }
+
+    public static void updateProduct(Product product) {
+        
+    }
+
+    public static void deleteProduct(Product product) {
+        
     }
 }
