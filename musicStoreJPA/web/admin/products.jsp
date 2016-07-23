@@ -32,6 +32,10 @@
     <input type="hidden" name="action" value="addProduct">
     <input type="submit" value="Add Product">
 </form>
+<br />
+    <form action="<c:url value='/admin'/>" method="post">
+        <input type=submit value="Go Back to Menu">
+</form>
 </section>    
 <!-- end middle column -->
 
