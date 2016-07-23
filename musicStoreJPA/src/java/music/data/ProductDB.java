@@ -50,6 +50,7 @@ public class ProductDB {
     }
     
      public static void insertProduct(Product product) {
+//        turnOffSafeUpdates();
         EntityManager em = getEM();
         em.getTransaction().begin(); 
         
@@ -64,7 +65,8 @@ public class ProductDB {
     }
 
     public static void updateProduct(Product product) {
-                EntityManager em = getEM();
+//        turnOffSafeUpdates();
+        EntityManager em = getEM();
         em.getTransaction().begin(); 
         
         Product p=em.find(Product.class,product.getId());
@@ -77,6 +79,7 @@ public class ProductDB {
     }
 
     public static void deleteProduct(Product product) {
+//        turnOffSafeUpdates();
         EntityManager em = getEM();
         em.getTransaction().begin(); 
         Product p = em.find(Product.class, product.getId());
@@ -98,6 +101,21 @@ public class ProductDB {
             }
             highId = highId+=1;
             return highId;
+    }
+    
+     public static void turnOffSafeUpdates() {
+       EntityManager em = getEM();
+       String query = "SET SQL_SAFE_UPDATES=0;";
+   
+       em.getTransaction().begin();
+       try {
+           em.createQuery(query);
+       } catch (Exception e) {
+           System.out.println(e);
+       } finally {
+           em.getTransaction().commit();
+           em.close();
+       }
     }
 
 }
