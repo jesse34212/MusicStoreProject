@@ -28,8 +28,14 @@
         <table>
         <tr>
             <td>
-                <input type="hidden" name="action" value="updateProduct">
-                <input type="submit" value="Update Product" style="margin-left: 6em;">
+                <c:if test="${pageContext.request.getParameter('action') == 'editProduct' or pageContext.request.getParameter('action') == 'updateProduct'}">
+                    <input type="hidden" name="action" value="updateProduct">
+                    <input type="submit" value="Update Product" style="margin-left: 7em;">
+                </c:if>
+                <c:if test="${pageContext.request.getParameter('action') == 'addProduct'}">
+                    <input type="hidden" name="action" value="addProduct">
+                    <input type="submit" value="Add Product" style="margin-left: 7em;">
+                </c:if>
                 </form>
             </td>
             <td>
