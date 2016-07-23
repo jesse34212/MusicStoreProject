@@ -33,7 +33,7 @@
                     <input type="submit" value="Update Product" style="margin-left: 7em;">
                 </c:if>
                 <c:if test="${pageContext.request.getParameter('action') == 'addProduct'}">
-                    <input type="hidden" name="action" value="addProduct">
+                    <input type="hidden" name="action" value="createProduct">
                     <input type="submit" value="Add Product" style="margin-left: 7em;">
                 </c:if>
                 </form>

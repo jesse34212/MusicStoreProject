@@ -53,11 +53,13 @@ public class ProductDB {
         EntityManager em = getEM();
         em.getTransaction().begin(); 
         
-        Product p=em.find(Product.class,product);
+        Product p=em.find(Product.class, product.getId());
         if(p==null)
         {
             em.persist(product);
-        } 
+        }  else {
+            em.merge(product);
+        }
         em.getTransaction().commit();
     }
 
@@ -85,4 +87,17 @@ public class ProductDB {
     private static EntityManager getEM(){
         return DBUtil.getEmFactory().createEntityManager();
     }
+    
+    public static Long incrementedID(){
+            Long highId = new Long(0);
+            List<Product> products = selectProducts();
+            for (int i = 0; i < products.size(); i++){
+                if (products.get(i).getId() > highId ){   
+                    highId = products.get(i).getId();
+                }
+            }
+            highId = highId+=1;
+            return highId;
+    }
+
 }

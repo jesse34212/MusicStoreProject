@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 import music.business.*;
 import music.data.*;
+import static music.data.ProductDB.selectProducts;
 
 public class AdminController extends HttpServlet {
 
@@ -182,25 +183,27 @@ public class AdminController extends HttpServlet {
         // Handles addProduct action
         // When adding a product, we must provide an empty form
         else if (action.equalsIgnoreCase("addProduct")) {
-            String productCode ="";
             url = "/admin/product.jsp";
+        } else if (action.equalsIgnoreCase("createProduct")){
             
+            Long newId = ProductDB.incrementedID();
+
             //finish insert
-            //            String productCode = request.getParameter("productCode");
-//            String productDescription = request.getParameter("productDescription");
-//            String productPrice = request.getParameter("productPrice");
+            String productCode = request.getParameter("productCode");
+            String productDescription = request.getParameter("productDescription");
+            String productPrice = request.getParameter("productPrice");
 //
 //            // Filling in product object with data
-//            Product p = new Product();
-//            p.setDescription(productDescription);
-//            p.setCode(productCode);
-//            p.setPrice(Double.parseDouble(productPrice));
-//            p.setId(new Long(12));
-//            ProductDB.insertProduct(p);
+            Product p = new Product();
+            p.setDescription(productDescription);
+            p.setCode(productCode);
+            p.setPrice(Double.parseDouble(productPrice));
+            p.setId(newId);
+            ProductDB.insertProduct(p);
 //
-//            List<Product> products = ProductDB.selectProducts();
-//            request.setAttribute("products", products);
-
+            List<Product> result = ProductDB.selectProducts();
+            request.setAttribute("products", result);
+            url="/admin/products.jsp";
         }
        
         // Handles editProduct action
