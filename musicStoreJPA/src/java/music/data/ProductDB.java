@@ -59,13 +59,19 @@ public class ProductDB {
             em.persist(product);
         } 
         em.getTransaction().commit();
-
-    
-
     }
 
     public static void updateProduct(Product product) {
+                EntityManager em = getEM();
+        em.getTransaction().begin(); 
         
+        Product p=em.find(Product.class,product.getId());
+        if(p!=null)
+        {
+            em.merge(product);
+        } 
+        em.getTransaction().commit();
+
     }
 
     public static void deleteProduct(Product product) {

@@ -184,6 +184,23 @@ public class AdminController extends HttpServlet {
         else if (action.equalsIgnoreCase("addProduct")) {
             String productCode ="";
             url = "/admin/product.jsp";
+            
+            //finish insert
+            //            String productCode = request.getParameter("productCode");
+//            String productDescription = request.getParameter("productDescription");
+//            String productPrice = request.getParameter("productPrice");
+//
+//            // Filling in product object with data
+//            Product p = new Product();
+//            p.setDescription(productDescription);
+//            p.setCode(productCode);
+//            p.setPrice(Double.parseDouble(productPrice));
+//            p.setId(new Long(12));
+//            ProductDB.insertProduct(p);
+//
+//            List<Product> products = ProductDB.selectProducts();
+//            request.setAttribute("products", products);
+
         }
        
         // Handles editProduct action
@@ -239,7 +256,6 @@ public class AdminController extends HttpServlet {
                 request.setAttribute("numberMessage", numberMessage);
             }
             
-            
             if (productCode == null || productDescription == null ||
                 price == null || productCode.isEmpty() ||
                 productDescription.isEmpty() || price.isEmpty()) {
@@ -247,19 +263,10 @@ public class AdminController extends HttpServlet {
                 url = "/admin/product.jsp";
             }
             if(numberMessage.isEmpty()) {
-                Product p = new Product();
-                /*if(ProductIO.exists(productCode)) {
-                    p = ProductDB.selectProduct(productCode);
+                Product p = ProductDB.selectProduct(productCode);
                     p.setDescription(productDescription);
                     p.setPrice(priceAsDouble);
-                    ProductIO.updateProduct(p);
-                }
-                else {
-                    p.setCode(productCode);
-                    p.setDescription(productDescription);
-                    p.setPrice(priceAsDouble);
-                    ProductIO.insertProduct(p);
-                }*/
+                    ProductDB.updateProduct(p);
                 url="/admin/products.jsp";
             }
             List<Product> products = ProductDB.selectProducts();    
