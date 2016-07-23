@@ -248,7 +248,7 @@ public class AdminController extends HttpServlet {
             }
             if(numberMessage.isEmpty()) {
                 Product p = new Product();
-                if(ProductIO.exists(productCode)) {
+                /*if(ProductIO.exists(productCode)) {
                     p = ProductDB.selectProduct(productCode);
                     p.setDescription(productDescription);
                     p.setPrice(priceAsDouble);
@@ -259,7 +259,7 @@ public class AdminController extends HttpServlet {
                     p.setDescription(productDescription);
                     p.setPrice(priceAsDouble);
                     ProductIO.insertProduct(p);
-                }
+                }*/
                 url="/admin/products.jsp";
             }
             List<Product> products = ProductDB.selectProducts();    
