@@ -1,9 +1,9 @@
 <jsp:include page="/includes/header.jsp" />
 <jsp:include page="/includes/column_left_admin.jsp" />
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- begin middle column -->
-
 <section id="admin">
 
 <h1>Products</h1>
@@ -20,7 +20,7 @@
     <tr>
         <td><c:out value="${product.code}" /></td>
         <td><c:out value="${product.description}" /></td>
-        <td class="right">$<c:out value="${product.price}" /></td>
+        <td class="right">$<fmt:formatNumber pattern="##.00" value="${product.price}" /></td>
         <td><a href="productMaint?action=editProduct&amp;productCode=${product.code}">Edit</a></td>
         <td><a href="productMaint?action=deleteProduct&amp;productCode=${product.code}">Delete</a></td>
     </tr>
