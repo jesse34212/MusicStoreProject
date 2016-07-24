@@ -1,6 +1,8 @@
 package music.controllers;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -52,10 +54,26 @@ public class CatalogController extends HttpServlet {
         if (productCode != null) {
             productCode = productCode.substring(1);
             Product product = ProductDB.selectProduct(productCode);
+            
+            // imageURL logic
+            String imageURL = "/images/" + product.getCode() + "_cover.jpg";
+
+            // Set this into the object
+            product.setImageURL(imageURL);
+            
+            // Create file object
+            File file = new File(request.getServletContext().getRealPath(imageURL));
+
+            // Check if file exists, set no cover if it doesn't
+            if(!file.exists()){ 
+                imageURL = "/images/no_cover.jpg";
+                product.setImageURL(imageURL);
+            }
+            
             HttpSession session = request.getSession();
             session.setAttribute("product", product);
         }    
-        System.out.println(productCode);
+
         return "/catalog/catalogitem.jsp";
     }
     
@@ -89,7 +107,18 @@ public class CatalogController extends HttpServlet {
         download.setProductCode(product.getCode());        
         DownloadDB.insert(download);
         
-        return "/catalog/" + product.getCode() + "/sound.jsp";
+        // soundURL logic
+        String soundURL = "/catalog/" + product.getCode() + "/sound.jsp";
+
+        // Create file object
+        File file = new File(request.getServletContext().getRealPath(soundURL));
+
+        // Check if file exists, redirect to no sound page if it doesn't
+        if(!file.exists()){ 
+            soundURL = "/catalog/noSound.jsp";
+        }
+            
+        return soundURL;
     }  
     
     private String registerUser(HttpServletRequest request,

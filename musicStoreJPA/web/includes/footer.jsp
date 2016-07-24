@@ -5,7 +5,7 @@
         var="myDS"
         driver="com.mysql.jdbc.Driver"
         url="jdbc:mysql://localhost:3306/music_jpa"
-        user="root" password="admin"
+        user="root" password="sesame"
     />
      
     <sql:query var="listProducts"   dataSource="${myDS}">

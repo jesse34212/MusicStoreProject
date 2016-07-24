@@ -31,6 +31,9 @@ public class Product implements Serializable {
     @Column(name = "PRICE", nullable = false)
     private double price;
     
+    @Transient
+    private String imageURL;
+    
     public Long getId() {
         return productId;
     }
@@ -79,6 +82,13 @@ public class Product implements Serializable {
         return currency.format(price);
     }
     
+    public String getImageURL() {
+        return imageURL;
+    }
+    
+    public void setImageURL(String URL) {
+        this.imageURL = URL;
+    }
     public String getProductType() {
         return "Audio CD";
     }
