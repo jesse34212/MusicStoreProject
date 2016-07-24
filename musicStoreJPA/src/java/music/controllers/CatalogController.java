@@ -1,6 +1,7 @@
 package music.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
@@ -19,6 +20,8 @@ public class CatalogController extends HttpServlet {
         String url;
         if (requestURI.endsWith("/listen")) {
             url = listen(request, response);
+        } else if (requestURI.endsWith("/showcatalog")) {
+            url = showCatalog(request, response);
         } else {
             url = showProduct(request, response);
         }
@@ -51,8 +54,9 @@ public class CatalogController extends HttpServlet {
             Product product = ProductDB.selectProduct(productCode);
             HttpSession session = request.getSession();
             session.setAttribute("product", product);
-        }        
-        return "/catalog/" + productCode + "/index.jsp";
+        }    
+        System.out.println(productCode);
+        return "/catalog/catalogitem.jsp";
     }
     
     private String listen(HttpServletRequest request, 
@@ -116,5 +120,15 @@ public class CatalogController extends HttpServlet {
         Product product = (Product) session.getAttribute("product");
         String url = "/catalog/" + product.getCode() + "/sound.jsp";
         return url;
-    }    
+    }
+
+    private String showCatalog(HttpServletRequest request, 
+            HttpServletResponse response) {
+        List<Product> products = ProductDB.selectProducts();
+        request.setAttribute("products", products);
+        
+        String url = "/catalog/index.jsp";
+        
+        return url;
+    }
 }

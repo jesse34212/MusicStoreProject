@@ -12,7 +12,7 @@
           <p>Your cart is empty.</p>
       </c:when>
       <c:otherwise>
-        <table>
+        <table class="none">
            <tr>
             <th>Qty</th>
             <th>Description</th>
@@ -44,8 +44,8 @@
             </tr>
           </c:forEach>
             <tr>
-              <td colspan="2">
-                <p><b>To change the quantity for an item</b>, enter the new quantity 
+              <td colspan="2" style="width:100%;">
+                <p ><b>To change the quantity for an item</b>, enter the new quantity 
                       and click on the Update button.</p>
                 <p><b>To remove an item</b>, click on the Remove button.</p>
               </td>
@@ -55,7 +55,7 @@
       </c:otherwise>
   </c:choose>
 
-<form action="<c:url value='/catalog'/>" method="get" id="float_left">
+<form action="<c:url value='/catalog/product/showcatalog'/>" method="get" id="float_left">
   <input type="submit" value="Continue Shopping">
 </form>
   

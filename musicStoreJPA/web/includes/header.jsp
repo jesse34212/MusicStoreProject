@@ -20,7 +20,7 @@
                          <a href="<c:url value='/' />">Home</a>
                     </li>
                     <li <c:if test="${fn:contains(pageContext.request.servletPath,'/catalog')}">class="current"</c:if>>
-                        <a href="<c:url value='/catalog' />">Catalog</a>
+                        <a href="<c:url value='/catalog/product/showcatalog' />">Catalog</a>
                     </li>
                 </ul>
                 <a href="<c:url value='/' />" id="logo"><img src="<c:url value='/images/logo.png' />" alt="Image"></a>

@@ -70,7 +70,7 @@ public class Product implements Serializable {
     
     public String getAlbumName() {
         String albumName = 
-                description.substring(0, description.indexOf(" - ")+3);
+                description.substring(description.indexOf(" - ") + 3);
         return albumName;
     }
     
