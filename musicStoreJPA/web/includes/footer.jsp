@@ -1,13 +1,27 @@
-                </div>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %> 
+
+    <sql:setDataSource
+        var="myDS"
+        driver="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://localhost:3306/music_jpa"
+        user="root" password="admin"
+    />
+     
+    <sql:query var="listProducts"   dataSource="${myDS}">
+        SELECT * FROM product;
+    </sql:query>
+
+</div>
                 <div id="sidebar">
-                    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                     <aside id="sidebarB">
                         <h1>New Release</h1>
-                        <img src="<c:url value='/images/8601_cover.jpg' />" width="80" alt="86 - True Life - Album Cover">
-                        <br />
-                        <a href="<c:url value='/catalog/product/8601' />">
-                            86 (the band) - True Life Songs and Pictures
-                        </a>
+                            <c:forEach var="product" items="${listProducts.rows}" varStatus="loop">
+                                <c:if test="${loop.last}">        
+                                    <img src="<c:url value='/images/${product.code}_cover.jpg' />" width="80" alt="${product.code} cover"><br />
+                                    <a href="<c:url value='/catalog/product/${product.code}' />">${product.description}</a> 
+                                </c:if>
+                            </c:forEach>
                         <p class="news_item">A refreshing mix of rock, country, and bluegrass 
                             that will have you stomping your foot and crying in your beer 
                             in no time.</p>
