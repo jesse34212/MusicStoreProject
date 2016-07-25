@@ -15,7 +15,7 @@
 <form action="productMaint" method="post">
     <table>
         <tr>
-            <td><label>Code:</label></td>
+            <td><label>Code:${pageContext.request.getParameter('action') == 'addProduct' || pageContext.request.getParameter('action') == 'createProduct'}</label></td>
             <td>
                 <input type="text" name="productCode" maxlength="4" size="4" value="<c:out value='${productCode}'/>" required>
                 <t1:ifEmptyMark field="${productCode}"/>
@@ -39,11 +39,11 @@
         <table>
         <tr>
             <td>
-                <c:if test="${pageContext.request.getParameter('action') == 'editProduct' or pageContext.request.getParameter('action') == 'updateProduct'}">
+                <c:if test="${pageContext.request.getParameter('action') == 'editProduct' || pageContext.request.getParameter('action') == 'updateProduct'}">
                     <input type="hidden" name="action" value="updateProduct">
                     <input type="submit" value="Update Product" style="margin-left: 7em;">
                 </c:if>
-                <c:if test="${pageContext.request.getParameter('action') == 'addProduct'}">
+                <c:if test="${pageContext.request.getParameter('action') == 'addProduct' || pageContext.request.getParameter('action') == 'createProduct'}">
                     <input type="hidden" name="action" value="createProduct">
                     <input type="submit" value="Add Product" style="margin-left: 7em;">
                 </c:if>
@@ -51,9 +51,9 @@
             </td>
             <td>
                 <form action="productMaint">
-    <input type="hidden" name="action" value="displayProducts">
-    <input type="submit" value="View Products"> 
-</form>
+                    <input type="hidden" name="action" value="displayProducts">
+                    <input type="submit" value="View Products"> 
+                </form>
             </td>
             
         </tr>

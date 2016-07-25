@@ -19,7 +19,7 @@
     </tr>
     <tr>
         <td><b>Price:</b></td>
-        <td>$<fmt:formatNumber pattern="##.00" value="${product.price}" /></td>
+        <td>$<fmt:formatNumber pattern="##.00" value="${productPrice}" /></td>
     </tr>
 </table>
 

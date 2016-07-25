@@ -2,6 +2,8 @@ package music.controllers;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -188,26 +190,54 @@ public class AdminController extends HttpServlet {
             
             Long newId = ProductDB.incrementedID();
 
-            //finish insert
-            String productCode = request.getParameter("productCode");
-            String productDescription = request.getParameter("productDescription");
-            String productPrice = request.getParameter("productPrice");
-//
-//            // Filling in product object with data
-            Product p = new Product();
-            p.setDescription(productDescription);
-            p.setCode(productCode);
-            p.setPrice(Double.parseDouble(productPrice));
-            p.setId(newId);
-            ProductDB.insertProduct(p);
-//
+           
             List<Product> result = ProductDB.selectProducts();
             request.setAttribute("products", result);
             url="/admin/products.jsp";
+            
+            String message ="";
+            String numberMessage="";            
+            String productCode = request.getParameter("productCode");
+            String productDescription = request.getParameter("productDescription");
+            String price = request.getParameter("productPrice");
+            double priceAsDouble=0L;
+            try {
+              priceAsDouble = Double.parseDouble(price);
+            } catch(NumberFormatException e) {
+                numberMessage = "Please Enter a valid price value";
+                url="/admin/product.jsp";
+                request.setAttribute("numberMessage", numberMessage);
+            }
+            
+            if (productCode == null || productDescription == null ||
+                price == null || productCode.isEmpty() ||
+                productDescription.isEmpty() || price.isEmpty()) {
+                message = "Please fill out all three text boxes";
+                url = "/admin/product.jsp";
+            }
+            if(numberMessage.isEmpty() && message.isEmpty()) {
+                // Filling in product object with data
+                Product p = new Product();
+                p.setId(newId);
+                p.setCode(productCode);
+                p.setDescription(productDescription);
+                p.setPrice(priceAsDouble);
+                ProductDB.insertProduct(p);
+                
+
+                url="/admin/products.jsp";
+            }
+            List<Product> products = ProductDB.selectProducts();    
+            
+            request.setAttribute("products", products);
+            request.setAttribute("message", message);
+            request.setAttribute("productCode", productCode);
+            request.setAttribute("productDescription", productDescription);
+            request.setAttribute("productPrice", price);  
         }
        
         // Handles editProduct action
-        else if (action.equalsIgnoreCase("editProduct")) {
+        else if (action.equalsIgnoreCase("editProduct")) {            
             // Get productCode from request
             String productCode = request.getParameter("productCode");
             
@@ -215,10 +245,14 @@ public class AdminController extends HttpServlet {
             Product p = new Product();
             p = ProductDB.selectProduct(productCode);
             
+             NumberFormat formatter = new DecimalFormat("#0.00");  
+            
+            String price = formatter.format(p.getPrice());
+            
             // Set data on page
             request.setAttribute("productCode", productCode);
             request.setAttribute("productDescription", p.getDescription());
-            request.setAttribute("productPrice", p.getPrice());
+            request.setAttribute("productPrice", price);
             
             // Set page we need to go to
             url = "/admin/product.jsp";
@@ -233,7 +267,7 @@ public class AdminController extends HttpServlet {
             // Filling in product object with data
             Product p = new Product();
             p = ProductDB.selectProduct(productCode);
-            
+
             // Set data on page
             request.setAttribute("productCode", productCode);
             request.setAttribute("productDescription", p.getDescription());
@@ -265,7 +299,7 @@ public class AdminController extends HttpServlet {
                 message = "Please fill out all three text boxes";
                 url = "/admin/product.jsp";
             }
-            if(numberMessage.isEmpty()) {
+            if(numberMessage.isEmpty() && message.isEmpty()) {
                 Product p = ProductDB.selectProduct(productCode);
                     p.setDescription(productDescription);
                     p.setPrice(priceAsDouble);
